@@ -1,8 +1,12 @@
 package model;
 
-import model.strategy.BotMoveStrategy;
 import model.strategy.HumanMoveStrategy;
 import model.strategy.MoveStrategy;
+
+import model.strategy.bot.EasyBotStrategy;
+import model.strategy.bot.MediumBotStrategy;
+import model.strategy.bot.HardBotStrategy;
+
 
 import java.util.Scanner;
 
@@ -45,7 +49,22 @@ public class Game {
         } else {
             System.out.println("Enter Difficulty Level: 1.Easy 2.Medium 3.Hard");
             int level=sc.nextInt();
-            moveStrategy2=new BotMoveStrategy();
+            switch (level) {
+                case 1:
+                    moveStrategy2 = new EasyBotStrategy();
+                    break;
+                case 2:
+                    moveStrategy2 = new MediumBotStrategy(symbol2);
+                    break;
+//                case 3:
+//                    moveStrategy2 = new HardBotStrategy();
+//                    break;
+                default:
+                    System.out.println("Invalid difficulty level.");
+                    return; // Exit or handle invalid input gracefully
+            }
+
+
             player2=new Player("Bot",symbol2,moveStrategy2);
         }
         currentPlayer=player1.getSymbol()==PlayerSymbol.X?player1:player2;
